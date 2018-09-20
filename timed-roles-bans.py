@@ -48,9 +48,9 @@ async def timedban(ctx, user, time, time_format, *reason):
         embed = discord.Embed(colour=discord.Colour(embed_color), description="**{}** banned **{}** for **{}**.".format(ctx.message.author, user, length_format))
         await bot.send_message(bot.get_channel(private_logs),embed=embed)
 
-        await bot.ban(user, 1)
+        await bot.ban(user, delete_message_days=0)
         await asyncio.sleep(length)
-        await bot.unban(user, 1)
+        await bot.unban(server, user)
 
         embed = discord.Embed(colour=discord.Colour(embed_color), description="**{}** has been unbanned after **{}**.".format(user, length_format))
         await bot.send_message(bot.get_channel(private_logs),embed=embed)

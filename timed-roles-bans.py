@@ -15,6 +15,8 @@ staff_role = "Staff" #Name of the role what is allowed to use this command. Must
 
 embed_color = 0x0097FF   # Do not remove 0x  || Message Color. Hex, 6 characters. Do NOT include # | Helpful link https://htmlcolorcodes.com/color-picker/
 embed_logo = "" #Direct Link to image. Leave blank to remove image.
+
+server = discord.Server(id='450259793764941836') #Server ID. Needed for unban logic.
 ###################################################################################################################################################################
 
 bot = commands.Bot(command_prefix=set_prefix)

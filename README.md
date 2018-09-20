@@ -4,5 +4,9 @@ Allows people with the correct permissions to place timed servers bans &amp; giv
 # Prerequisites
 discord
 
-# Commands
+# Formats
 !timedban @ward 4 weeks reason
+
+!timedban user time format reason
+
+weeks/wks, months/mons, hours/hrs, minutes/mins

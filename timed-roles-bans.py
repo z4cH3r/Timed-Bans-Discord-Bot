@@ -42,7 +42,7 @@ async def timedban(ctx, user, time, time_format, *reason):
             length_format = '{} Month(s)'.format(time)
         elif time_format == 'minutes' or time_format == 'mins':
             length = int(time) / 0.016667
-            length_format = '{} Minutes(s)'.format(time)
+            length_format = '{} Minute(s)'.format(time)
 
         embed = discord.Embed(colour=discord.Colour(embed_color), description="**User:** {}\n**Type:** Server Ban\n**Reason:** {}\n**Length:** {}".format(user, ' '.join(reason), length_format))
         await bot.send_message(bot.get_channel(public_logs),embed=embed)

@@ -2,11 +2,11 @@
 Allows people with the correct permissions to place timed servers bans &amp; give roles for a certain amount of time.
 
 # Prerequisites
-discord
+- discord
 
 # Commands
-!timedban user time format reason
-!timedrole user type time format reason
+- !timedban user time format reason
+- !timedrole user type time format reason
 
 weeks/wks, months/mons, hours/hrs, minutes/mins
 
@@ -18,3 +18,8 @@ Public Logs
 Private Logs
 
 ![private logs](https://i.gyazo.com/6f14c25aa27845caa1ab198fe28128d4.png)
+
+# TDL
+- Ban Protests
+- Permanent Bans
+- Proper Unbans

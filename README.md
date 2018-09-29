@@ -18,4 +18,5 @@ discord
 weeks/wks, months/mons, hours/hrs, minutes/mins
 
 # Preview
-!(public logs)[https://i.gyazo.com/2cc23d4dd91979e5672d3448e6a8b3fb.png]
+![public logs](https://i.gyazo.com/2cc23d4dd91979e5672d3448e6a8b3fb.png)
+![private logs](https://i.gyazo.com/6f14c25aa27845caa1ab198fe28128d4.png)

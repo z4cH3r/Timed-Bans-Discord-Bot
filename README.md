@@ -9,7 +9,7 @@ discord
 
 !timedban user time format reason
 
-(Please not that is a server ban)
+(Please note that is a server ban)
 
 !timedrole @ward chat 4 weeks reason
 

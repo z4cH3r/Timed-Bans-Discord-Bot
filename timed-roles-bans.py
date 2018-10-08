@@ -154,4 +154,20 @@ async def timedrole(ctx, user, ban_type, time, time_format, *reason):
         error = discord.Embed(colour=discord.Colour(embed_color), description="The ban time must be a **integer** not a **string**.\n or the command was entered incorrectly.\nPlease note for the role system to work the discord bot must be above the role.")
         await bot.say(embed=error)
 
+@bot.command(pass_context=True)
+@commands.has_role(staff_role)
+async def ban(ctx, user, *reason):
+    try:
+        user = ctx.message.mentions[0]
+        await bot.ban(user, delete_message_days=0)
+
+        embed = discord.Embed(colour=discord.Colour(embed_color), description="**User:** {}\n**Type:** Permanent Ban\n**Reason:** {}".format(user, ' '.join(reason)))
+        await bot.send_message(bot.get_channel(public_logs),embed=embed)
+
+        embed = discord.Embed(colour=discord.Colour(embed_color), description="**{}** banned **{}** **forever**.".format(ctx.message.author, user))
+        await bot.send_message(bot.get_channel(private_logs),embed=embed)
+    except:
+        error = discord.Embed(colour=discord.Colour(embed_color), description="Unable to ban that user. This maybe due to incorrect formatting or the bot doesn't have permissions.")
+        await bot.say(embed=error)        
+        
 bot.run(bot_token)

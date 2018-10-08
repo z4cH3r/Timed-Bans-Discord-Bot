@@ -7,6 +7,7 @@ Allows people with the correct permissions to place timed servers bans &amp; giv
 # Commands
 - !timedban user time format reason
 - !timedrole user type time format reason
+- !ban user reason
 
 weeks/wks, months/mons, hours/hrs, minutes/mins
 

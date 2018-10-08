@@ -21,5 +21,4 @@ Private Logs
 
 # TDL
 - Ban Protests
-- Permanent Bans
 - Proper Unbans

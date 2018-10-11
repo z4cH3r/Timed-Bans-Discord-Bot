@@ -75,6 +75,12 @@ async def timedban(ctx, user, time, time_format, *reason):
         elif time_format == 'minutes' or time_format == 'mins':
             length = int(time) / 0.016667
             length_format = '{} Minute(s)'.format(time)
+        elif time_format == 'days' or time_format == 'ds':
+            length = int(time) * 86400
+            length_format = '{} Day(s)'.format(time)
+        elif time_format == 'years' or time_format == 'yrs':
+            length = int(time) * 31556952
+            length_format = '{} Year(s)'.format(time)
 
         embed = discord.Embed(colour=discord.Colour(embed_color), description="**User:** {}\n**Type:** Server Ban\n**Reason:** {}\n**Length:** {}".format(user, ' '.join(reason), length_format))
         await bot.send_message(bot.get_channel(public_logs),embed=embed)
@@ -121,6 +127,12 @@ async def timedrole(ctx, user, ban_type, time, time_format, *reason):
         elif time_format == 'minutes' or time_format == 'mins':
             length = int(time) / 0.016667
             length_format = '{} Minute(s)'.format(time)
+        elif time_format == 'days' or time_format == 'ds':
+            length = int(time) * 86400
+            length_format = '{} Day(s)'.format(time)
+        elif time_format == 'years' or time_format == 'yrs':
+            length = int(time) * 31556952
+            length_format = '{} Year(s)'.format(time)
 
         embed = discord.Embed(colour=discord.Colour(embed_color), description="**User:** {}\n**Type:** {} \n**Reason:** {}\n**Length:** {}".format(user, ban_type_formatted,' '.join(reason), length_format))
         await bot.send_message(bot.get_channel(public_logs),embed=embed)

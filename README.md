@@ -23,3 +23,4 @@ Private Logs
 # TDL
 - Ban Protests
 - Proper Unbans
+- Improve ban evasion system

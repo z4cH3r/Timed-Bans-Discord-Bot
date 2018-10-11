@@ -9,7 +9,7 @@ Allows people with the correct permissions to place timed servers bans &amp; giv
 - !timedrole user type time format reason
 - !ban user reason
 
-Time formats: weeks/wks, months/mons, hours/hrs, minutes/mins
+Time formats: weeks/wks, months/mons, hours/hrs, minutes/mins, days/ds & years/yrs.
 
 # Preview
 Public Logs

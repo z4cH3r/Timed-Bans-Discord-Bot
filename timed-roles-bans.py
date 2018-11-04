@@ -60,36 +60,6 @@ async def on_member_join(member):
 
 @bot.command(pass_context=True)
 @commands.has_role(staff_role)
-async def timedban(ctx, user, time, time_format, *reason):
-    user = ctx.message.mentions[0]
-    if time_format == 'weeks' or time_format == 'wks':
-        length = int(time) * 604800
-        length_format = '{} Week(s)'.format(time)
-    elif time_format == 'hours' or time_format == 'hrs':
-        length = int(time) / 0.00027777778
-        length_format = '{} Hour(s)'.format(time)
-    elif time_format == 'months' or time_format == 'mons':
-        length = int(time) * 2629740
-        length_format = '{} Month(s)'.format(time)
-    elif time_format == 'minutes' or time_format == 'mins':
-        length = int(time) / 0.016667
-        length_format = '{} Minute(s)'.format(time)
-
-    embed = discord.Embed(colour=discord.Colour(embed_color), description="**User:** {}\n**Type:** Server Ban\n**Reason:** {}\n**Length:** {}".format(user, ' '.join(reason), length_format))
-    await bot.send_message(bot.get_channel(public_logs),embed=embed)
-
-    embed = discord.Embed(colour=discord.Colour(embed_color), description="**{}** banned **{}** for **{}**.".format(ctx.message.author, user, length_format))
-    await bot.send_message(bot.get_channel(private_logs),embed=embed)
-
-    await bot.ban(user, delete_message_days=0)
-    await asyncio.sleep(length)
-    await bot.unban(server, user)
-
-    embed = discord.Embed(colour=discord.Colour(embed_color), description="**{}** has been unbanned after **{}**.".format(user, length_format))
-    await bot.send_message(bot.get_channel(private_logs),embed=embed)
-
-@bot.command(pass_context=True)
-@commands.has_role(staff_role)
 async def timedrole(ctx, user, ban_type, time, time_format, *reason):
     custom_role = discord.utils.get(ctx.message.server.roles,name=custom_role_set)
     chat_ban_role = discord.utils.get(ctx.message.server.roles,name=chat_ban_role_set)
@@ -115,6 +85,9 @@ async def timedrole(ctx, user, ban_type, time, time_format, *reason):
     elif time_format == 'minutes' or time_format == 'mins':
         length = int(time) / 0.016667
         length_format = '{} Minute(s)'.format(time)
+    elif time_format == 'days' or time_format == 'ds':
+        length = int(time) * 0.86400
+        length_format = '{} Day(s)'.format(time)
 
     embed = discord.Embed(colour=discord.Colour(embed_color), description="**User:** {}\n**Type:** {} \n**Reason:** {}\n**Length:** {}".format(user, ban_type_formatted,' '.join(reason), length_format))
     await bot.send_message(bot.get_channel(public_logs),embed=embed)

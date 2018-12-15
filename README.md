@@ -1,5 +1,5 @@
 # About
-Allows people with the correct permissions to place timed servers bans &amp; give roles for a certain amount of time
+Allows people with the correct permissions to give roles for a certain amount of time
 
 # Updates
 - Improved ban evasion system, now takes previous ban into consideration.

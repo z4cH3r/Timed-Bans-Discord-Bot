@@ -42,7 +42,6 @@ async def on_member_join(member):
 
         embed = discord.Embed(colour=discord.Colour(embed_color), description="**User:** {}\n**Type:** Community\n**Reason:** Avoiding Bans\n**Length:** Original ban + 2 Weeks".format(member))
         await bot.send_message(bot.get_channel(public_logs),embed=embed)
-
         
         embed = discord.Embed(colour=discord.Colour(embed_color), description="**{}** was just banned for an additional **2 weeks**.\n**Reason:** Trying to avoid bans.".format(member))
         await bot.send_message(bot.get_channel(private_logs),embed=embed)

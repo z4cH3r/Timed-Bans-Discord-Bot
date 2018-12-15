@@ -6,28 +6,25 @@ import asyncio
 
 ###################################################################################################################################################################
 #Config
-bot_token = "" #Discord bot token. Find at https://discordapp.com/developers/applications/me
-set_prefix = '!' #Sets command prefix.
+bot_token = '' # Discord bot token. Find at https://discordapp.com/developers/applications/me
+set_prefix = '!' # Sets command prefix.
 
-public_logs = "491867518080909313" #Channel for Public ban logs.
-private_logs = "491867537533829121" #Provides more detailed logs & unban system.
-staff_role = "Staff" #Name of the role what is allowed to use this command. Must be completely correct, including capitalisation and spaces.
+public_logs = '' # Channel for Public ban logs.
+private_logs = '' # Provides more detailed logs & unban system.
+staff_role = 'Staff' # Name of the role what is allowed to use this command. Must be completely correct, including capitalisation and spaces.
 
-#Setting Role for chat & pug ban. Must be completely correct, including capitalisation and spaces.
+#  Setting Role for chat & pug ban. Must be completely correct, including capitalisation and spaces.
 chat_ban_role_set = 'Chat Ban'
 custom_role_set = 'Pug Ban'
 custom_tag = 'pug'
 custom_formatted = 'Pug Ban'
 
-embed_color = 0x0097FF   #Do not remove 0x  || Message Color. Hex, 6 characters. Do NOT include # | Helpful link https://htmlcolorcodes.com/color-picker/
-embed_logo = "" #Direct Link to image. Leave blank to remove image.
-
-server = discord.Server(id='450259793764941836') #Server ID. Needed for unban logic.
+embed_color = 0x0097FF   # Do not remove 0x  || Message Color. Hex, 6 characters. Do NOT include # | Helpful link https://htmlcolorcodes.com/color-picker/
 ###################################################################################################################################################################
 
 bot = commands.Bot(command_prefix=set_prefix)
 
-banned_users = []
+bans = {}
 
 @bot.event
 async def on_ready():
@@ -38,24 +35,23 @@ async def on_ready():
 async def on_member_join(member):
     custom_role = discord.utils.get(member.server.roles, name=custom_role_set)
     chat_ban_role = discord.utils.get(member.server.roles, name=chat_ban_role_set)
-
-    if member in banned_users:
+    perm_user = member.id
+    if perm_user in bans:
         await bot.add_roles(member, custom_role, chat_ban_role)
-        await bot.send_message(member, "Your account has been banned for 2 weeks\n This is due to leaving & rejoining the server with a active ban.")
+        await bot.send_message(member, "Your account has been banned for an additional 2 weeks\n This is due to leaving & rejoining the server with a active ban.")
 
-        embed = discord.Embed(colour=discord.Colour(embed_color), description="**User:** {}\n**Type:** Community\n**Reason:** Avoiding Bans\n**Length:** 2 Weeks".format(member))
-        embed.set_thumbnail(url=embed_logo)
+        embed = discord.Embed(colour=discord.Colour(embed_color), description="**User:** {}\n**Type:** Community\n**Reason:** Avoiding Bans\n**Length:** Original ban + 2 Weeks".format(member))
         await bot.send_message(bot.get_channel(public_logs),embed=embed)
 
         
-        embed = discord.Embed(colour=discord.Colour(embed_color), description="**{}** was just banned for **2 weeks**.\n**Reason:** Trying to avoid bans.".format(member))
+        embed = discord.Embed(colour=discord.Colour(embed_color), description="**{}** was just banned for an additional **2 weeks**.\n**Reason:** Trying to avoid bans.".format(member))
         await bot.send_message(bot.get_channel(private_logs),embed=embed)
 
-        await asyncio.sleep(1209600)
+        await asyncio.sleep(bans[perm_user] + 1209600)
         await bot.remove_roles(member, custom_role, chat_ban_role)
-        banned_users.remove(member)
+        bans.pop(perm_user)
 
-        embed = discord.Embed(colour=discord.Colour(embed_color), description="**{}** was just unbanned after **2 weeks**.".format(member))
+        embed = discord.Embed(colour=discord.Colour(embed_color), description="**{}** was just unbanned after **2 weeks** + his original ban.".format(member))
         await bot.send_message(bot.get_channel(private_logs),embed=embed)
 
 @bot.command(pass_context=True)
@@ -72,6 +68,7 @@ async def timedrole(ctx, user, ban_type, time, time_format, *reason):
         ban_type_formatted = "Chat Ban"
 
     user = ctx.message.mentions[0]
+    perm_user = ctx.message.mentions[0].id
 
     if time_format == 'weeks' or time_format == 'wks':
         length = int(time) * 604800
@@ -89,13 +86,17 @@ async def timedrole(ctx, user, ban_type, time, time_format, *reason):
         length = int(time) * 0.86400
         length_format = '{} Day(s)'.format(time)
 
+    if perm_user in bans:
+        length + bans[perm_user]
+        bans.pop(perm_user)
+        
     embed = discord.Embed(colour=discord.Colour(embed_color), description="**User:** {}\n**Type:** {} \n**Reason:** {}\n**Length:** {}".format(user, ban_type_formatted,' '.join(reason), length_format))
     await bot.send_message(bot.get_channel(public_logs),embed=embed)
 
     embed = discord.Embed(colour=discord.Colour(embed_color), description="**{}** has given **{}** the role **{}** for **{}**.".format(ctx.message.author, user, ban_type_formatted, length_format))
     await bot.send_message(bot.get_channel(private_logs),embed=embed)
 
-    banned_users.append(user)
+    bans[perm_user] = length
 
     if ban_type == custom_tag:
         await bot.add_roles(user, custom_role)
@@ -112,7 +113,7 @@ async def timedrole(ctx, user, ban_type, time, time_format, *reason):
         await asyncio.sleep(length)
         await bot.remove_roles(user, chat_ban_role)
 
-    banned_users.remove(user)
+    bans.pop(perm_user)
 
     embed = discord.Embed(colour=discord.Colour(embed_color), description="The role **{}** has been removed from **{}** after **{}**.".format(ban_type_formatted, user, length_format))
     await bot.send_message(bot.get_channel(private_logs),embed=embed)

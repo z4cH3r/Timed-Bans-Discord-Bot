@@ -1,13 +1,16 @@
 # About
-Allows people with the correct permissions to place timed servers bans &amp; give roles for a certain amount of time.
+Allows people with the correct permissions to place timed servers bans &amp; give roles for a certain amount of time
+
+# Updates
+- Improved ban evasion system, now takes previous ban into consideration.
+- If User has on going ban it will add it to the new ban.
+- Won't unban the user if another ban is set for longer.
 
 # Prerequisites
 - discord
 
 # Commands
-- !timedban user time format reason
 - !timedrole user type time format reason
-- !ban user reason
 
 Time formats: weeks/wks, months/mons, hours/hrs, minutes/mins, days/ds & years/yrs.
 
@@ -23,4 +26,3 @@ Private Logs
 # TDL
 - Ban Protests
 - Proper Unbans
-- Improve ban evasion system

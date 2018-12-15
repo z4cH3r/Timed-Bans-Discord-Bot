@@ -24,5 +24,6 @@ Private Logs
 ![private logs](https://i.gyazo.com/6f14c25aa27845caa1ab198fe28128d4.png)
 
 # TDL
-- Ban Protests
-- Proper Unbans
+- Ban Protests.
+- Proper Unbans.
+- Timed Server Bans.

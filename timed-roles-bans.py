@@ -103,20 +103,21 @@ async def timedrole(ctx, user, ban_type, time, time_format, *reason):
         if length >= bans[perm_user]:
             await asyncio.sleep(length)
             await bot.remove_roles(user, custom_role)
+            bans.pop(perm_user)
             
     elif ban_type == "community" or ban_type == "com":
         await bot.add_roles(user, custom_role, chat_ban_role)
         if length >= bans[perm_user]:
             await asyncio.sleep(length)
             await bot.remove_roles(user, custom_role, chat_ban_role)
+            bans.pop(perm_user)
 
     elif ban_type == "chat":
         await bot.add_roles(user, chat_ban_role)
         if length >= bans[perm_user]:
             await asyncio.sleep(length)
             await bot.remove_roles(user, chat_ban_role)
-
-    bans.pop(perm_user)
+            bans.pop(perm_user)
 
     embed = discord.Embed(colour=discord.Colour(embed_color), description="The role **{}** has been removed from **{}** after **{}**.".format(ban_type_formatted, user, length_format))
     await bot.send_message(bot.get_channel(private_logs),embed=embed)

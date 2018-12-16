@@ -12,7 +12,7 @@ Allows people with the correct permissions to give roles for a certain amount of
 # Commands
 - !timedrole user type time format reason
 
-Time formats: weeks/wks, months/mons, hours/hrs, minutes/mins, days/ds & years/yrs.
+Time formats: weeks/wks, months/mons, hours/hrs, minutes/mins & days/ds.
 
 # Preview
 Public Logs

@@ -29,7 +29,6 @@ bans = {}
 @bot.event
 async def on_ready():
     print("Bot connected!\nCurrently linked to {}".format(bot.user.name)) #Prints bots status and what bot token its connect to.
-    await bot.change_presence(game=discord.Game(name="Timed ban system."))
 
 @bot.event
 async def on_member_join(member):
@@ -37,8 +36,12 @@ async def on_member_join(member):
     chat_ban_role = discord.utils.get(member.server.roles, name=chat_ban_role_set)
     perm_user = member.id
     if perm_user in bans:
+        length = bans[perm_user] + 1209600
+        bans.pop(perm_user)
+        bans.update( {perm_user : length} )
+
         await bot.add_roles(member, custom_role, chat_ban_role)
-        await bot.send_message(member, "Your account has been banned for an additional 2 weeks\n This is due to leaving & rejoining the server with a active ban.")
+        await bot.send_message(member, "Your account has been banned for an additional 2 weeks\nThis is due to leaving & rejoining the server with a active ban.")
 
         embed = discord.Embed(colour=discord.Colour(embed_color), description="**User:** {}\n**Type:** Community\n**Reason:** Avoiding Bans\n**Length:** Original ban + 2 Weeks".format(member))
         await bot.send_message(bot.get_channel(public_logs),embed=embed)
@@ -46,7 +49,7 @@ async def on_member_join(member):
         embed = discord.Embed(colour=discord.Colour(embed_color), description="**{}** was just banned for an additional **2 weeks**.\n**Reason:** Trying to avoid bans.".format(member))
         await bot.send_message(bot.get_channel(private_logs),embed=embed)
 
-        await asyncio.sleep(bans[perm_user] + 1209600)
+        await asyncio.sleep(length)
         await bot.remove_roles(member, custom_role, chat_ban_role)
         bans.pop(perm_user)
 
@@ -86,8 +89,12 @@ async def timedrole(ctx, user, ban_type, time, time_format, *reason):
         length_format = '{} Day(s)'.format(time)
 
     if perm_user in bans:
-        length + bans[perm_user]
+        ban_length = length + bans[perm_user]
         bans.pop(perm_user)
+        bans.update( {perm_user : ban_length} )
+    else:
+        ban_length = length
+        bans.update( {perm_user : length} )
         
     embed = discord.Embed(colour=discord.Colour(embed_color), description="**User:** {}\n**Type:** {} \n**Reason:** {}\n**Length:** {}".format(user, ban_type_formatted,' '.join(reason), length_format))
     await bot.send_message(bot.get_channel(public_logs),embed=embed)
@@ -95,30 +102,34 @@ async def timedrole(ctx, user, ban_type, time, time_format, *reason):
     embed = discord.Embed(colour=discord.Colour(embed_color), description="**{}** has given **{}** the role **{}** for **{}**.".format(ctx.message.author, user, ban_type_formatted, length_format))
     await bot.send_message(bot.get_channel(private_logs),embed=embed)
 
-    bans[perm_user] = length
+    msg = 0
 
     if ban_type == custom_tag:
         await bot.add_roles(user, custom_role)
+        await asyncio.sleep(ban_length)
         if length >= bans[perm_user]:
-            await asyncio.sleep(length)
             await bot.remove_roles(user, custom_role)
             bans.pop(perm_user)
-            
+            msg = 1
+
     elif ban_type == "community" or ban_type == "com":
         await bot.add_roles(user, custom_role, chat_ban_role)
+        await asyncio.sleep(ban_length)
         if length >= bans[perm_user]:
-            await asyncio.sleep(length)
             await bot.remove_roles(user, custom_role, chat_ban_role)
             bans.pop(perm_user)
+            msg = 1
 
     elif ban_type == "chat":
         await bot.add_roles(user, chat_ban_role)
+        await asyncio.sleep(ban_length)
         if length >= bans[perm_user]:
-            await asyncio.sleep(length)
             await bot.remove_roles(user, chat_ban_role)
             bans.pop(perm_user)
+            msg = 1
 
-    embed = discord.Embed(colour=discord.Colour(embed_color), description="The role **{}** has been removed from **{}** after **{}**.".format(ban_type_formatted, user, length_format))
-    await bot.send_message(bot.get_channel(private_logs),embed=embed)
+    if msg == 1:
+        embed = discord.Embed(colour=discord.Colour(embed_color), description="The role **{}** has been removed from **{}** after **{}**.".format(ban_type_formatted, user, length_format))
+        await bot.send_message(bot.get_channel(private_logs),embed=embed)
 
 bot.run(bot_token)

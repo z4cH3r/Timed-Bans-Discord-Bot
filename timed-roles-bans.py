@@ -107,7 +107,7 @@ async def timedrole(ctx, user, ban_type, time, time_format, *reason):
     if ban_type == custom_tag:
         await bot.add_roles(user, custom_role)
         await asyncio.sleep(ban_length)
-        if length >= bans[perm_user]:
+        if ban_length >= bans[perm_user]:
             await bot.remove_roles(user, custom_role)
             bans.pop(perm_user)
             msg = 1
@@ -115,7 +115,7 @@ async def timedrole(ctx, user, ban_type, time, time_format, *reason):
     elif ban_type == "community" or ban_type == "com":
         await bot.add_roles(user, custom_role, chat_ban_role)
         await asyncio.sleep(ban_length)
-        if length >= bans[perm_user]:
+        if ban_length >= bans[perm_user]:
             await bot.remove_roles(user, custom_role, chat_ban_role)
             bans.pop(perm_user)
             msg = 1
@@ -123,7 +123,7 @@ async def timedrole(ctx, user, ban_type, time, time_format, *reason):
     elif ban_type == "chat":
         await bot.add_roles(user, chat_ban_role)
         await asyncio.sleep(ban_length)
-        if length >= bans[perm_user]:
+        if ban_length >= bans[perm_user]:
             await bot.remove_roles(user, chat_ban_role)
             bans.pop(perm_user)
             msg = 1

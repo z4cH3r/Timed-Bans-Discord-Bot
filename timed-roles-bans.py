@@ -28,7 +28,7 @@ bans = {}
 
 @bot.event
 async def on_ready():
-    print("Bot connected!\nCurrently linked to {}".format(bot.user.name)) #Prints bots status and what bot token its connect to.
+    print("Bot connected!\nCurrently linked to {}".format(bot.user.name))
 
 @bot.event
 async def on_member_join(member):

@@ -17,11 +17,11 @@ Time formats: weeks/wks, months/mons, hours/hrs, minutes/mins, days/ds & years/y
 # Preview
 Public Logs
 
-![public logs](https://i.gyazo.com/2cc23d4dd91979e5672d3448e6a8b3fb.png)
+![public logs](https://i.gyazo.com/c3b5a065d85e8299a63b60365496d8f3.png)
 
 Private Logs
 
-![private logs](https://i.gyazo.com/6f14c25aa27845caa1ab198fe28128d4.png)
+![private logs](https://i.gyazo.com/1faea701ad7f0e49eab0767e6608f370.png)
 
 # TDL
 - Ban Protests.

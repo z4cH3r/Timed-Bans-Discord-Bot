@@ -72,19 +72,19 @@ async def timedrole(ctx, user, ban_type, time, time_format, *reason):
     user = ctx.message.mentions[0]
     perm_user = ctx.message.mentions[0].id
 
-    if time_format == 'weeks' or time_format == 'wks':
+    if time_format == 'weeks' or time_format == 'wks' or time_format == 'week' or time_format == 'wk':
         length = int(time) * 604800
         length_format = '{} Week(s)'.format(time)
-    elif time_format == 'hours' or time_format == 'hrs':
+    elif time_format == 'hours' or time_format == 'hrs' or time_format == 'hour' or time_format == 'hr':
         length = int(time) / 0.00027777778
         length_format = '{} Hour(s)'.format(time)
-    elif time_format == 'months' or time_format == 'mons':
+    elif time_format == 'months' or time_format == 'mons' or time_format == 'month' or time_format == 'mon':
         length = int(time) * 2629740
         length_format = '{} Month(s)'.format(time)
-    elif time_format == 'minutes' or time_format == 'mins':
+    elif time_format == 'minutes' or time_format == 'mins' or time_format == 'minute' or time_format == 'min':
         length = int(time) / 0.016667
         length_format = '{} Minute(s)'.format(time)
-    elif time_format == 'days' or time_format == 'ds':
+    elif time_format == 'days' or time_format == 'ds' or time_format == 'day' or time_format == 'd':
         length = int(time) * 0.86400
         length_format = '{} Day(s)'.format(time)
 
